@@ -3,9 +3,8 @@
 <img src="image/experian.png">
 
 # Table of contents
-- [Table of contents](#table-of-contents)
-    + [Background and the Data](#background-and-the-data)
-    + [Goal](#goal)
++ [Background and the Data](#background-and-the-data)
++ [Goal](#goal)
 
 
 
