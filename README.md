@@ -2,6 +2,11 @@
 ### Kane Ren
 <img src="image/experian.png">
 
+# Table of contents
+<a name="Background-and-the-Data"></a>Background and the Data
+
+
+
 ### Background and the Data
 
 Business can purchase data from Experian to get more insight about their customers.
@@ -159,7 +164,17 @@ Using RFE from Sklearn to pick 1 of the best feature from the 10 features:
 
 The model with 1 feature has a accuracy decrease in 2%
 
-After Many Trial and Errors, using GridSearch From Sklearn, the best performing model is Random Forest and Gradient by using all features with specific parameter:
+After Many Trial and Errors, using GridSearch From Sklearn, the best performing model is Gradient Boost by using all features with specific parameter:
 <img src="image/Best GB Model.png">
 
-<img src="image/Best RF Model.png">
+With this model, accuracy can go up to 58%, a 1% increase from the original model.
+
+
+### Conclusion
+Because the distribution of feature for Active user and Inactive user is not really distinguishable, the model doesn't perform really well.
+
+A Neural Network can also be seen in the source code, the performance is not good either.
+
+A final Accuracy of 58% is slightly better than random guessing. Depends on the business situation, that could mean a lot or nothing.
+
+To Identify Customer that Churn, a Log Model on all feature is the best, with 0.57 precision and recall. To Identify Customer that didn't Churn, a Gradient boost model is best with 0.58 precision and 0.65 recall.
