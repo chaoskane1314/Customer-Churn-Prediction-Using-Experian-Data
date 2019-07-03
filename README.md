@@ -5,6 +5,11 @@
 # Table of contents
 + [Background and the Data](#background-and-the-data)
 + [Goal](#goal)
++ [Data and Cleaning](#Data-and-Cleaning)
++ [Hypothesis Testing](#hypothesis-testing)
++ [Confidence interval](#confidence-interval)
++ [Building A Model](#building-a-model)
++ [Conclusion](#conclusion)
 
 
 
@@ -28,7 +33,7 @@ Model include Logistic, Random Forest, Gradient Boost, Neural Network.
 Baseline probability 0.5, Model should do better than random Guess
 
 
-## Data and Cleaning
+### Data and Cleaning
 - The Data contain 20000 rows and 492 Columns.
 - a heatmap of missing data is shown below:
 
@@ -76,7 +81,7 @@ So one of the column of medical policy or life ins policy will be dropped, I dro
 
 We can use the same technique to examine other pairs with high correlation as well. This might reduce the effect of collinearity for a better model fit in the future.
 
-## Hypothesis Testing
+### Hypothesis Testing
 
 Since the goal is to find out if there is really a difference between the score of Active group and Cancel group. I will be doing a  significance test on the difference of mean value. I will perform the test on two column here, but it can apply to all. Since the sample size is really large in this data,8700 for the active group and 8596 for the cancel group. I will use z-test instead of t-test since there will be nearly no difference in the result.
 
@@ -126,7 +131,7 @@ Since this is a square root of the data, the range will be from 1 to 10 (Origina
 Interpretation of this confidence interval:
 - At a scale of 10, we are 95% confidence that the true mean difference of wine lover value between the active group and cancel group is between (-0.5099, -0.3687). In context, the lower the value, the more likely the person is a "Wine Lover", so the active group is more likely to be a wine person.
 
-## Building A Model
+### Building A Model
 A distribution of every column compare the two group of users is created. By looking at the distribution of each column, there is actually no huge disinclination on the two group of user.
 
 Because of that, first to just build a Simple Logistic Model with all features, see how it looks
