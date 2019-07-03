@@ -3,7 +3,9 @@
 <img src="image/experian.png">
 
 # Table of contents
-<a name="Background-and-the-Data"></a>Background and the Data
+-[Background and the Data](*Background and the Data)<br>
+-[Goal](*Goal)<br>
+-[Data and Cleaning](*Data and Cleaning)
 
 
 
