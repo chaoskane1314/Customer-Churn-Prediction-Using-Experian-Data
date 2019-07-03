@@ -1,4 +1,4 @@
-# Customer-Acquisition-Rentention-Using-Experian-Data
+# Customer Churn Prediction using Experian Data
 ### Kane Ren
 <img src="image/experian.png">
 
@@ -15,30 +15,30 @@ Subscription Status is base on after a free trial subscription.
 Active: users continue to subscribe after trial.<br>
 Cancel/Expire: users op out of the subscription after trial.
 ### Goal
-To find out if there is difference between customers that are still subscribing(Active group) vs customers that cancel(Cancel group) base on these data.
+Create model to Predict Customer Churn by using the Experian Data.
 
-E.g.: if the "Active customers" had a significant higher or lower "Play Golf Value" than the "Cancel customers". Then this information can be use to target better customers, result in higher conversion on new customer acquisition or better retention on existing customers.
+Model include Logistic, Random Forest, Gradient Boost, Neural Network.
+
+Baseline probability 0.5, Model should do better than random Guess
 
 ## Data and Cleaning
-- The Data contain 20000 rows.
-- For the categorical data, most column has 15745 rows of non-null data.
-- For the numerical data,  most column has 17052 non-null data.
+- The Data contain 20000 rows and 492 Columns.
 - a heatmap of missing data is shown below:
 
-<img src="image/missing data.png">
+<img src="image/heatmap missing.png">
 
-When a data is missing in the categorical or numerical, the whole row of data seems to missing as well. I decide to split the data respectively, drop all the missing value because a whole row of missing value doesn't contribute anything to my analysis.
+Some column has no data at all, which will be remove
 
-For this project, I will be only working on the numerical columns.
+For most of other missing data, when data is missing, the whole row is missing as well, so all those rows will be dropped because a whole row of missing value doesn't contribute anything to my analysis.
 
 ### Exploratory Data Analysis(EDA)
-I will be plotting the distribution of both active group and cacel group on the same graph to see the the difference between the two.
+I will be plotting the distribution of both active group and cancel group on the same graph to see the the difference between the two.
 
-By looking at the plot below, a better idea how the distribution for one column of numerical data looks like for each of the group. It will proivde information on what the is the shape, where the mean it is, and a general idea of the difference.
+By looking at the plot below, a better idea how the distribution for one column of numerical data looks like for each of the group. It will provide information on what the is the shape, where the mean it is, and a general idea of the difference.
 
-<img src="image/ wine lovers.png">
+<img src="image/wine lovers.png">
 
-For the "wine lovers" column, both group has a positive skew distribution, with mode around 10, and the mean is 34.5 for the active user group, 39.55 for the cancel group.
+For the "wine lovers" column, both group has a positive skew distribution, with mode around 10, and the mean is 34.1y for the active user group, 39.44 for the cancel group.
 
 Another two example: column "video gamer" and "dog owner".
 
@@ -49,9 +49,7 @@ From the above two plot, both group actually has similar shape of distribution.<
 However, for "video gamer" column, the mean is far more apart then the "dog owners" column.
 
 ### Correlation between numerical variable.
-Check to see if there is any correlation between the data column. By doing this, if a model is need to be build upon the data, some collinearity relationship can be spot here.
-
-To do so, a correlation heat map is created to identify these relationship.
+Since we are at the exploring data process, we want to see if there is any correlation between the datas. To do so, I decide to create a correlation heat map to identify these relationship.
 
 <img align="center" src="image/corr heatmap.png">
 
@@ -66,6 +64,8 @@ For example, the "medical policy" and "life insurance policy" has a correlation 
 From the above scatterplot, we can see a strong pattern. As one variable increase, the other tend to increase as well.
 <BR>
 This make sense, since both medical and life insurance usually come together.
+
+So one of the column of medical policy or life ins policy will be dropped, I dropped the life ins column in this case.
 
 We can use the same technique to examine other pairs with high correlation as well. This might reduce the effect of collinearity for a better model fit in the future.
 
@@ -84,7 +84,7 @@ The two column to perform the test below will be the "wine lover" and "dog owner
 For "wine lover" column, looking at the shape of distribution,a highly positive skew is observed, I will perform a square root transformation on the data, the result will display below.<BR>
 <p align="center">
 Before:
-<img src="image/ wine lovers.png">
+<img src="image/wine lovers.png">
 After:
 <img src="image/data transform.png">
 </p>
@@ -119,7 +119,47 @@ Since this is a square root of the data, the range will be from 1 to 10 (Origina
 Interpretation of this confidence interval:
 - At a scale of 10, we are 95% confidence that the true mean difference of wine lover value between the active group and cancel group is between (-0.5099, -0.3687). In context, the lower the value, the more likely the person is a "Wine Lover", so the active group is more likely to be a wine person.
 
-## Future Work
-- Split into subgroups depend on type of subscription.
-- Examine all data provide by Experian.
-- Create a prediction model.
+## Building A Model
+A distribution of every column compare the two group of users is created. By looking at the distribution of each column, there is actually no huge disinclination on the two group of user.
+
+Because of that, first to just build a Simple Logistic Model with all features, see how it looks
+
+The number Active user and Inactive User is really even in the data. There is 8244 active user and 8134 inactive users.
+
+If every user is guess as Active, the accuracy will be 8244/(8244+8134) = 0.5033, which is about 50%. Our model should do better than that
+
+For a simple Logistic Model base on all Features:
+<img src="image/classification for simple log.png">
+
+The accuracy is about 0.57.
+
+The ROC Curve
+<img src="image/ROC Curve.png">
+
+The accuracy and ROC curve both not good, but that is expected since as mention above, for this data set, the distribution of two group of user are pretty much on top of each other.
+
+Create a basic Random Forest Model and Gradient Boost Model:
+
+Random Forest:
+<img src="image/Basic Random Forest.png">
+Gradient Boost:
+<img src="image/Basic GB.png">
+
+Both model perform really similar to the Logistic Model, just higher recall in predicting active user.
+
+Since all model is a bit weak, try to just use feature that has the most difference.
+
+By using the best 10 Features and build a Logistic Model:
+<img src="image/10 log.png">
+
+The result is also really similar.
+
+Using RFE from Sklearn to pick 1 of the best feature from the 10 features:
+<img src="image/rfe.png">
+
+The model with 1 feature has a accuracy decrease in 2%
+
+After Many Trial and Errors, using GridSearch From Sklearn, the best performing model is Random Forest and Gradient by using all features with specific parameter:
+<img src="image/Best GB Model.png">
+
+<img src="image/Best RF Model.png">
