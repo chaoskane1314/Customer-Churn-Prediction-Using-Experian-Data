@@ -3,9 +3,9 @@
 <img src="image/experian.png">
 
 # Table of contents
--[Background and the Data](*Background and the Data)<br>
--[Goal](*Goal)<br>
--[Data and Cleaning](*Data and Cleaning)
+- [Table of contents](#table-of-contents)
+    + [Background and the Data](#background-and-the-data)
+    + [Goal](#goal)
 
 
 
@@ -27,6 +27,7 @@ Create model to Predict Customer Churn by using the Experian Data.
 Model include Logistic, Random Forest, Gradient Boost, Neural Network.
 
 Baseline probability 0.5, Model should do better than random Guess
+
 
 ## Data and Cleaning
 - The Data contain 20000 rows and 492 Columns.
